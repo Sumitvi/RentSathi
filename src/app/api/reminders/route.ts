@@ -6,7 +6,6 @@ import { NextResponse } from "next/server";
 export async function GET(req: Request) {
   await connectDB();
 
-
   const { searchParams } = new URL(req.url);
   const key = searchParams.get("key");
 
@@ -31,7 +30,11 @@ export async function GET(req: Request) {
       status: "paid",
     });
 
-    if (!payment && today >= (t.dueDate || 5)) {
+    const dueDate = t.dueDate || 5;
+    const reminderDay = dueDate - 3;
+
+    
+    if (!payment && today === reminderDay) {
       unpaidTenants.push({
         name: t.name,
         email: t.email,

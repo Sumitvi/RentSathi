@@ -15,9 +15,14 @@ export async function POST(req: Request) {
   const body = await req.json();
 
   const tenant = await Tenant.create({
-    ...body,
-    landlordId: session.user.id,
-  });
+  name: body.name,
+  email: body.email || "",
+  phone: body.phone || "",
+  roomNumber: body.roomNumber,
+  rentAmount: body.rentAmount,
+  dueDate: body.dueDate || 5,
+  landlordId: session.user.id,
+});
 
   return NextResponse.json(tenant);
 }
