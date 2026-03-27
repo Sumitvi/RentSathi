@@ -37,7 +37,6 @@ export async function GET(req: Request) {
 
   if (key === "supersecret123") {
     const tenants = await Tenant.find({});
-
     return NextResponse.json(tenants);
   }
 
